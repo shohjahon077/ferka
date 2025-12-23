@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FerkaVeka | Liquid Glass</title>
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --liquid-accent: linear-gradient(135deg, #00f2ff, #006aff, #7000ff);
+            --border: rgba(255, 255, 255, 0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+
+        body {
+            background: #020205;
+            height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            font-family: "SF Pro Display", -apple-system, sans-serif;
+            color: white;
+        }
+
+        /* --- LIQUID BACKGROUND --- */
+        .liquid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0a0a1a, #000);
+        }
+
+        .blob {
+            position: absolute;
+            width: 600px; height: 600px;
+            background: var(--liquid-accent);
+            filter: blur(120px);
+            border-radius: 50%;
+            opacity: 0.35;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; }
+        .blob-2 { bottom: -10%; right: -10%; animation-delay: -7s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            100% { transform: translate(150px, 100px) rotate(90deg) scale(1.3); }
+        }
+
+        /* --- INTRO "F" BRANDING --- */
+        #intro {
+            position: fixed; inset: 0; z-index: 1000; background: #000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .f-logo {
+            font-size: 160px; font-weight: 900; color: #fff;
+            animation: fLaunch 2.5s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+        }
+        @keyframes fLaunch {
+            0% { opacity: 0; transform: scale(0.5); filter: blur(20px); }
+            50% { opacity: 1; transform: scale(1); filter: blur(0); text-shadow: 0 0 50px #00f2ff; }
+            100% { opacity: 0; transform: scale(8); filter: blur(100px); }
+        }
+
+        /* --- LIQUID GLASS CARD --- */
+        .card {
+            width: 92%; max-width: 420px;
+            height: 88dvh;
+            background: var(--glass);
+            backdrop-filter: blur(80px) saturate(250%) contrast(110%);
+            -webkit-backdrop-filter: blur(80px) saturate(250%) contrast(110%);
+            border: 1px solid var(--border);
+            border-radius: 65px;
+            padding: 45px 25px;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.8), inset 0 0 30px rgba(255,255,255,0.05);
+            opacity: 0; transform: scale(0.8) translateY(100px);
+            transition: 2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .loaded .card { opacity: 1; transform: scale(1) translateY(0); }
+
+        /* Square Liquid Avatar */
+        .avatar-frame {
+            position: relative; width: 150px; height: 150px; margin-bottom: 25px;
+        }
+        .avatar-img {
+            width: 100%; height: 100%; object-fit: cover;
+            border-radius: 40px; border: 1px solid rgba(255,255,255,0.2);
+            z-index: 2; position: relative;
+        }
+        .avatar-glow {
+            position: absolute; inset: -15px;
+            background: var(--liquid-accent);
+            border-radius: 50px; filter: blur(30px); opacity: 0.5;
+            animation: glowPulse 4s infinite alternate;
+        }
+        @keyframes glowPulse { to { transform: scale(1.1); opacity: 0.2; } }
+
+        h1 { font-size: 38px; font-weight: 900; letter-spacing: -2px; margin-bottom: 5px; }
+        .tag { font-size: 11px; letter-spacing: 6px; color: #00f2ff; text-transform: uppercase; font-weight: 700; margin-bottom: 35px; }
+
+        /* --- BUTTONS: LIQUID STYLE --- */
+        .stack { width: 100%; overflow-y: auto; flex: 1; padding-right: 5px; }
+        .stack::-webkit-scrollbar { display: none; }
+
+        .btn {
+            display: flex; align-items: center; padding: 22px 25px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 32px; margin-bottom: 14px;
+            text-decoration: none; color: #fff;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative; overflow: hidden;
+        }
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-8px) rotateX(10deg);
+            border-color: #00f2ff;
+            box-shadow: 0 20px 40px rgba(0, 242, 255, 0.15);
+        }
+        .btn::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.6s;
+        }
+        .btn:hover::after { left: 100%; }
+
+        .prime { background: #fff; color: #000; font-weight: 800; border: none; }
+
+        .icon-sq {
+            width: 44px; height: 44px; background: rgba(255,255,255,0.08);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; margin-right: 18px;
+        }
+        .prime .icon-sq { background: rgba(0,0,0,0.05); }
+
+        footer { margin-top: 25px; font-size: 10px; opacity: 0.3; letter-spacing: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="liquid-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+
+    <div id="intro"><div class="f-logo">F</div></div>
+
+    <div class="card" id="mainCard">
+        <div class="avatar-frame">
+            <div class="avatar-glow"></div>
+            <img class="avatar-img" src="https://via.placeholder.com/300" alt="FerkaVeka">
+        </div>
+
+        <h1>FerkaVeka</h1>
+        <p class="tag">Liquid Excellence</p>
+
+        <div class="stack">
+            <a href="https://tirikchilik.uz/ferkaveka" class="btn prime">
+                <div class="icon-sq">💎</div>
+                <span style="flex:1">Support Vision</span>
+                <span>→</span>
+            </a>
+            <a href="https://t.me/FerkaVeka" class="btn">
+                <div class="icon-sq" style="color:#0088cc">✈️</div>
+                <span style="flex:1">Telegram Hub</span>
+                <span>→</span>
+            </a>
+            <a href="https://www.instagram.com/ferkavekau" class="btn">
+                <div class="icon-sq" style="color:#ff007f">📸</div>
+                <span style="flex:1">Instagram</span>
+                <span>→</span>
+            </a>
+            <a href="https://youtube.com/@ferka-veka" class="btn">
+                <div class="icon-sq" style="color:#ff0000">📡</div>
+                <span style="flex:1">YouTube</span>
+                <span>→</span>
+            </a>
+            <a href="https://www.tiktok.com/@ferka_veka" class="btn">
+                <div class="icon-sq">🎵</div>
+                <span style="flex:1">TikTok</span>
+                <span>→</span>
+            </a>
+            <a href="https://l.likee.video/p/tNqjUk" class="btn">
+                <div class="icon-sq">🌟</div>
+                <span style="flex:1">Likee</span>
+                <span>→</span>
+            </a>
+            <a href="https://x.com/ferkaveka" class="btn">
+                <div class="icon-sq">🐦</div>
+                <span style="flex:1">X (Twitter)</span>
+                <span>→</span>
+            </a>
+            <a href="https://t.me/FerkaVekau" class="btn" style="border: 1px dashed #00f2ff; color: #00f2ff;">
+                <div class="icon-sq">💼</div>
+                <span style="flex:1">Business Sync</span>
+                <span>→</span>
+            </a>
+        </div>
+
+        <footer>BEYOND GLASS</footer>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                document.getElementById('intro').style.opacity = '0';
+                document.body.classList.add('loaded');
+                setTimeout(() => document.getElementById('intro').remove(), 1000);
+            }, 2500);
+        });
+
+        const card = document.getElementById('mainCard');
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.pageX) / 40;
+            const y = (window.innerHeight / 2 - e.pageY) / 40;
+            requestAnimationFrame(() => {
+                card.style.transform = `rotateX(${y}deg) rotateY(${x}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
