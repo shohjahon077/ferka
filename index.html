@@ -75,7 +75,7 @@
             100% { opacity: 0.7; }
         }
 
-        /* YANGI KIRISH ANIMATSIYASI - PNG LOGO */
+        /* YAXSHILANGAN KIRISH ANIMATSIYASI */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -87,75 +87,204 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            animation: intro-fade-out 0.5s ease-out 2s forwards;
+            animation: intro-fade-out 0.8s cubic-bezier(0.4, 0, 0.2, 1) 3s forwards;
         }
 
         .logo-container {
             position: relative;
-            width: 200px;
-            height: 200px;
+            width: 600px;
+            height: 600px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
+        /* YANADA YAXSHI ANIMATSIYA */
         .logo-png {
-            width: 120px;
-            height: 120px;
+            width: 240px;
+            height: 240px;
             opacity: 0;
-            filter: drop-shadow(0 0 20px var(--ios-primary));
-            animation: logo-drop-in 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            filter: drop-shadow(0 0 0 var(--ios-primary));
+            animation: 
+                logo-magic-in 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards,
+                logo-float 2s ease-in-out 1.2s infinite;
         }
 
-        @keyframes logo-drop-in {
+        @keyframes logo-magic-in {
             0% {
                 opacity: 0;
-                transform: translateY(-100px) scale(0.5);
-                filter: blur(10px) drop-shadow(0 0 0 var(--ios-primary));
+                transform: 
+                    translateY(80px) 
+                    scale(0.4) 
+                    rotate(-180deg);
+                filter: blur(30px) drop-shadow(0 0 0 var(--ios-primary));
             }
-            50% {
+            30% {
+                opacity: 0.8;
+                transform: 
+                    translateY(-15px) 
+                    scale(1.2) 
+                    rotate(10deg);
+                filter: blur(10px) drop-shadow(0 0 40px var(--ios-primary));
+            }
+            60% {
                 opacity: 1;
-                transform: translateY(0) scale(1.1);
-                filter: blur(0) drop-shadow(0 0 40px var(--ios-primary));
+                transform: 
+                    translateY(5px) 
+                    scale(0.95) 
+                    rotate(-5deg);
+                filter: blur(3px) drop-shadow(0 0 70px var(--ios-primary));
+            }
+            80% {
+                opacity: 1;
+                transform: 
+                    translateY(0) 
+                    scale(1.05) 
+                    rotate(2deg);
+                filter: blur(0) drop-shadow(0 0 90px var(--ios-primary));
             }
             100% {
                 opacity: 1;
+                transform: 
+                    translateY(0) 
+                    scale(1) 
+                    rotate(0deg);
+                filter: blur(0) drop-shadow(0 0 120px var(--ios-primary));
+            }
+        }
+
+        @keyframes logo-float {
+            0%, 100% {
                 transform: translateY(0) scale(1);
-                filter: blur(0) drop-shadow(0 0 60px var(--ios-primary));
+                filter: drop-shadow(0 0 100px var(--ios-primary));
+            }
+            50% {
+                transform: translateY(-10px) scale(1.03);
+                filter: drop-shadow(0 0 140px var(--ios-primary));
             }
         }
 
         .logo-glow {
             position: absolute;
-            width: 160px;
-            height: 160px;
-            background: radial-gradient(circle, var(--ios-primary) 0%, transparent 70%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, 
+                rgba(0, 122, 255, 0.9) 0%, 
+                rgba(88, 86, 214, 0.7) 30%, 
+                transparent 70%);
             border-radius: 50%;
-            filter: blur(40px);
+            filter: blur(60px);
             opacity: 0;
-            animation: glow-pulse 2s infinite alternate 0.5s;
+            animation: 
+                glow-appear 1.5s ease-out 0.3s forwards,
+                glow-breathe 2.5s ease-in-out 1.8s infinite alternate;
         }
 
-        @keyframes glow-pulse {
+        @keyframes glow-appear {
             0% {
-                opacity: 0.3;
-                transform: scale(0.8);
+                opacity: 0;
+                transform: scale(0.1);
+            }
+            70% {
+                opacity: 0.8;
+                transform: scale(1.3);
             }
             100% {
-                opacity: 0.6;
-                transform: scale(1.2);
+                opacity: 0.5;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glow-breathe {
+            0% {
+                opacity: 0.4;
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Background light rays */
+        .light-rays {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+            animation: rays-rotate 20s linear infinite 1s;
+        }
+
+        .ray {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: linear-gradient(to bottom, 
+                transparent, 
+                var(--ios-primary), 
+                transparent);
+            left: 50%;
+            top: 50%;
+            transform-origin: 0 0;
+            border-radius: 1px;
+        }
+
+        .ray:nth-child(1) { transform: rotate(0deg) translateY(-50px); }
+        .ray:nth-child(2) { transform: rotate(45deg) translateY(-50px); }
+        .ray:nth-child(3) { transform: rotate(90deg) translateY(-50px); }
+        .ray:nth-child(4) { transform: rotate(135deg) translateY(-50px); }
+        .ray:nth-child(5) { transform: rotate(180deg) translateY(-50px); }
+        .ray:nth-child(6) { transform: rotate(225deg) translateY(-50px); }
+        .ray:nth-child(7) { transform: rotate(270deg) translateY(-50px); }
+        .ray:nth-child(8) { transform: rotate(315deg) translateY(-50px); }
+
+        @keyframes rays-rotate {
+            0% {
+                transform: rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: rotate(360deg);
+                opacity: 0.3;
+            }
+        }
+
+        /* Intro text animation */
+        .intro-text {
+            position: absolute;
+            bottom: 30%;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--ios-teal);
+            opacity: 0;
+            animation: text-fade-in 1s ease-out 1.5s forwards;
+            text-transform: uppercase;
+        }
+
+        @keyframes text-fade-in {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateY(0);
             }
         }
 
         @keyframes intro-fade-out {
             0% {
                 opacity: 1;
-                transform: scale(1);
+                backdrop-filter: blur(0);
             }
             100% {
                 opacity: 0;
                 visibility: hidden;
-                transform: scale(1.05);
+                backdrop-filter: blur(20px);
             }
         }
 
@@ -180,7 +309,7 @@
                 0 0 0 1px rgba(255, 255, 255, 0.03);
             opacity: 0;
             transform: translateY(30px) scale(0.95);
-            animation: card-appear 1s cubic-bezier(0.4, 0, 0.2, 1) 2.5s forwards;
+            animation: card-appear 1s cubic-bezier(0.4, 0, 0.2, 1) 3.2s forwards;
             position: relative;
             overflow: hidden;
         }
@@ -205,7 +334,7 @@
             }
         }
 
-        /* AVATAR - KICHIKROQ */
+        /* AVATAR */
         .avatar-container {
             position: relative;
             width: 140px;
@@ -279,7 +408,7 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             scrollbar-width: thin;
             scrollbar-color: var(--ios-primary) transparent;
         }
@@ -360,6 +489,25 @@
             box-shadow: 0 20px 40px rgba(0, 122, 255, 0.35);
         }
 
+        /* YANGI FERKAVEKA SITE TUGMASI */
+        .button-site {
+            background: linear-gradient(135deg, 
+                var(--ios-accent), 
+                #30B856);
+            color: white;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 16px 32px rgba(52, 199, 89, 0.25);
+            margin-top: 5px;
+        }
+
+        .button-site:hover {
+            background: linear-gradient(135deg, 
+                #38D565, 
+                var(--ios-accent));
+            box-shadow: 0 20px 40px rgba(52, 199, 89, 0.35);
+        }
+
         /* KICHIKROQ IKONKALAR */
         .icon-container {
             width: 42px;
@@ -376,7 +524,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .button-primary .icon-container {
+        .button-primary .icon-container,
+        .button-site .icon-container {
             background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.2);
         }
@@ -413,7 +562,7 @@
 
         /* FOOTER */
         .footer-text {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 11px;
             letter-spacing: 8px;
             color: rgba(255, 255, 255, 0.4);
@@ -433,13 +582,23 @@
     <div class="fire-bg"></div>
     <div class="fire-overlay"></div>
 
-    <!-- YANGI KIRISH ANIMATSIYASI -->
+    <!-- YAXSHILANGAN KIRISH ANIMATSIYASI -->
     <div class="intro-screen">
         <div class="logo-container">
+            <div class="light-rays">
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+                <div class="ray"></div>
+            </div>
             <div class="logo-glow"></div>
-            <!-- O'zingizning f.png faylingizni qo'ying -->
             <img src="PicsArt_01-21-09.17.36.png" alt="F Logo" class="logo-png">
         </div>
+        <div class="intro-text">FerkaVeka</div>
     </div>
 
     <!-- iOS 26 GLASS INTERFEYS -->
@@ -452,14 +611,13 @@
 
         <!-- SARLAVHA -->
         <h1 class="title">FerkaVeka</h1>
-        
+        <p class="subtitle">Liquid Glass</p>
 
         <!-- KICHIKROQ BUTTONLAR -->
         <div class="buttons-scroll">
             <!-- Support Vision -->
             <a href="https://tirikchilik.uz/ferkaveka" class="ios-button button-primary">
                 <div class="icon-container">
-                    <!-- Diamond Icon -->
                     <img src="IMG_6810.PNG" alt="Diamond">
                 </div>
                 <span class="button-label">Support Vision</span>
@@ -526,6 +684,16 @@
                     <img src="IMG_6727.PNG" alt="Business">
                 </div>
                 <span class="button-label">Business Sync</span>
+                <span class="button-arrow">→</span>
+            </a>
+
+            <!-- YANGI: FerkaVeka Site -->
+            <a href="https://ferkaveka.vercel.app/" class="ios-button button-site">
+                <div class="icon-container">
+                    <!-- Glove icon yoki globe icon uchun PNG -->
+                    <img src="IMG_6810.PNG" alt="Website">
+                </div>
+                <span class="button-label">FerkaVeka Site</span>
                 <span class="button-arrow">→</span>
             </a>
         </div>
@@ -620,8 +788,10 @@
             const buttonsScroll = document.querySelector('.buttons-scroll');
             buttonsScroll.scrollTop = 0;
             
-            // Fokus effekti
-            card.style.animation = 'card-appear 1s cubic-bezier(0.4, 0, 0.2, 1) 2.5s forwards';
+            // Light rays animatsiyasi
+            setTimeout(() => {
+                document.querySelector('.light-rays').style.opacity = '0.4';
+            }, 1500);
         });
     </script>
 </body>
